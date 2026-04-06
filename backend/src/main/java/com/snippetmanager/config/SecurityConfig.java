@@ -34,7 +34,16 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
+                // Public endpoints
+                .requestMatchers(
+                    "/api/auth/**",
+                    "/", 
+                    "/index.html",
+                    "/static/**",
+                    "/assets/**",
+                    "/css/**",
+                    "/js/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
@@ -48,7 +57,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001", "http://127.0.0.1:3001", "http://localhost:5173", "http://127.0.0.1:5173")); // Allow multiple local ports
+        configuration.setAllowedOrigins(List.of("*")); // easy local dev
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
