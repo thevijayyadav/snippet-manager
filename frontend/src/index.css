@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --panel: #ffffff;
+    --border: #e2e8f0;
+    --primary: #6366f1;
+    --primary-glow: rgba(99, 102, 241, 0.2);
+    --accent: #ec4899;
+    --secondary: #64748b;
+  }
+  
+  .dark {
+    --background: #020617;
+    --foreground: #f8fafc;
+    --panel: rgba(15, 23, 42, 0.8);
+    --border: rgba(51, 65, 85, 0.4);
+    --primary: #818cf8;
+    --primary-glow: rgba(129, 140, 248, 0.3);
+    --accent: #f472b6;
+    --secondary: #94a3b8;
+  }
+
+  .ocean {
+    --background: #0c1a29;
+    --foreground: #e0f2fe;
+    --panel: rgba(15, 33, 53, 0.7);
+    --border: rgba(14, 165, 233, 0.3);
+    --primary: #38bdf8;
+    --primary-glow: rgba(56, 189, 248, 0.3);
+    --accent: #2dd4bf;
+    --secondary: #7dd3fc;
+  }
+
+  .sunset {
+    --background: #1c0a0a;
+    --foreground: #fff1f2;
+    --panel: rgba(69, 10, 10, 0.7);
+    --border: rgba(225, 29, 72, 0.3);
+    --primary: #fb7185;
+    --primary-glow: rgba(251, 113, 133, 0.3);
+    --accent: #f59e0b;
+    --secondary: #fda4af;
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-x: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  * {
+    @apply transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background-color: var(--panel);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-primary {
+    @apply relative overflow-hidden px-6 py-2.5 rounded-xl font-medium transition-all duration-300 
+           hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    box-shadow: 0 4px 15px var(--primary-glow);
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2.5 rounded-xl font-medium transition-all duration-300 
+           hover:bg-opacity-20 flex items-center justify-center gap-2;
+    background-color: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border outline-none transition-all duration-300
+           focus:ring-2 focus:ring-opacity-50;
+    background-color: var(--panel);
+    border-color: var(--border);
+    color: var(--foreground);
+    --tw-ring-color: var(--primary);
+  }
+
+  .input-field:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+  }
+
+  .label-gradient {
+    @apply bg-clip-text text-transparent font-bold;
+    background-image: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px var(--primary-glow);
+  }
+}

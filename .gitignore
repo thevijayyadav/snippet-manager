@@ -1,0 +1,18 @@
+# General
+.DS_Store
+node_modules/
+dist/
+build/
+*.class
+*.log
+.env
+
+# Java/Spring
+target/
+*.jar
+*.war
+.settings/
+.classpath
+.project
+.vscode/
+.idea/

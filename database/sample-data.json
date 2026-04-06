@@ -1,0 +1,15 @@
+[
+  {
+    "username": "admin",
+    "email": "admin@snippermaster.local",
+    "password": "hashed_password_here",
+    "role": "ADMIN"
+  },
+  {
+    "_comment": "Insert this into users collection, and reference the ObjectId in the snippet authorId.",
+    "title": "FastAPI Base App",
+    "code": "from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get('/')\ndef read_root():\n    return {'Hello': 'World'}",
+    "language": "python",
+    "tags": ["python", "api", "fastapi"]
+  }
+]
