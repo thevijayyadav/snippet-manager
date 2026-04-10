@@ -4,6 +4,7 @@ import snippetService from '../services/snippetService';
 import { Save, X, Code, FileText, Hash, Lock, Unlock, Sparkles, Terminal, AlertTriangle, Eye, EyeOff, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import teamService from '../services/teamService';
+import { useTheme } from '../context/ThemeContext';
 
 export default function AddSnippet() {
   const navigate = useNavigate();
@@ -58,6 +59,16 @@ export default function AddSnippet() {
       setSaving(false);
     }
   };
+
+  const { theme: currentTheme } = useTheme();
+
+  const themeColors = {
+    dark: { bg: '#0f172a', text: '#f8fafc' },
+    light: { bg: '#f8fafc', text: '#0f172a' },
+    ocean: { bg: '#0c1a29', text: '#e0f2fe' },
+    sunset: { bg: '#1c0a0a', text: '#fff1f2' }
+  };
+  const colors = themeColors[currentTheme] || themeColors.dark;
 
   return (
     <motion.div 
@@ -128,11 +139,12 @@ export default function AddSnippet() {
                     </button>
                     <select 
                       className="bg-panel border border-border rounded-xl text-[10px] font-black px-3 py-1 text-primary focus:ring-1 focus:ring-primary outline-none transition-all uppercase tracking-wider"
+                      style={{ backgroundColor: colors.bg, color: 'var(--primary)' }}
                       value={formData.language}
                       onChange={e => setFormData({...formData, language: e.target.value})}
                     >
                       {['javascript', 'python', 'java', 'go', 'html', 'sql', 'typescript'].map(lang => (
-                        <option key={lang} value={lang}>{lang}</option>
+                        <option key={lang} value={lang} style={{ backgroundColor: colors.bg, color: colors.text }}>{lang}</option>
                       ))}
                     </select>
                   </div>
@@ -156,7 +168,8 @@ export default function AddSnippet() {
                   {!showPreview ? (
                     <textarea
                       required
-                      className="relative w-full h-[32rem] bg-background/50 border border-border rounded-[1.5rem] py-6 px-6 focus:ring-2 focus:ring-primary/20 text-foreground font-mono text-sm placeholder-secondary/30 transition-all outline-none resize-none shadow-inner"
+                      className="input-field relative w-full h-[32rem] py-6 px-6 font-mono text-sm placeholder-secondary/30 resize-none shadow-inner"
+                      style={{ backgroundColor: colors.bg, color: colors.text }}
                       placeholder="// Unleash your brilliance here..."
                       value={formData.code}
                       onChange={e => handleCodeChange(e.target.value)}

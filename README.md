@@ -131,8 +131,8 @@ snippet-manager/
 
 ---
 
-## 📜 License
-Distributed under the **MIT License**.
 
-Built with ❤️ by **Antigravity AI**.
 
+
+
+![alt text](image.png)

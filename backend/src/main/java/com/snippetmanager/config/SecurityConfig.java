@@ -34,17 +34,12 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                // Public endpoints
-                .requestMatchers(
-                    "/api/auth/**",
-                    "/", 
-                    "/index.html",
-                    "/static/**",
-                    "/assets/**",
-                    "/css/**",
-                    "/js/**"
-                ).permitAll()
-                .anyRequest().authenticated()
+                // Public endpoints for authentication
+                .requestMatchers("/api/auth/**").permitAll()
+                // All other API endpoints require authentication
+                .requestMatchers("/api/**").authenticated()
+                // Everything else (frontend routes, static assets) is public
+                .anyRequest().permitAll()
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -57,7 +52,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); // easy local dev
+        configuration.setAllowedOriginPatterns(List.of("*")); // easy local dev
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

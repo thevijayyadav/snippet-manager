@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import snippetService from '../services/snippetService';
 import { Save, X, Code, FileText, Hash, Lock, Unlock, Sparkles, Terminal } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 export default function EditSnippet() {
   const { id } = useParams();
@@ -17,6 +18,16 @@ export default function EditSnippet() {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  const { theme: currentTheme } = useTheme();
+
+  const themeColors = {
+    dark: { bg: '#0f172a', text: '#f8fafc' },
+    light: { bg: '#f8fafc', text: '#0f172a' },
+    ocean: { bg: '#0c1a29', text: '#e0f2fe' },
+    sunset: { bg: '#1c0a0a', text: '#fff1f2' }
+  };
+  const colors = themeColors[currentTheme] || themeColors.dark;
 
   useEffect(() => {
     const fetchSnippet = async () => {
@@ -123,11 +134,12 @@ export default function EditSnippet() {
                   <div className="flex items-center gap-4">
                     <select 
                       className="bg-panel border border-border rounded-xl text-[10px] font-black px-3 py-1 text-primary focus:ring-1 focus:ring-primary outline-none transition-all uppercase tracking-wider"
+                      style={{ backgroundColor: colors.bg, color: 'var(--primary)' }}
                       value={formData.language}
                       onChange={e => setFormData({...formData, language: e.target.value})}
                     >
                       {['javascript', 'python', 'java', 'go', 'html', 'sql', 'typescript'].map(lang => (
-                        <option key={lang} value={lang}>{lang}</option>
+                        <option key={lang} value={lang} style={{ backgroundColor: colors.bg, color: colors.text }}>{lang}</option>
                       ))}
                     </select>
                   </div>
@@ -136,7 +148,8 @@ export default function EditSnippet() {
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/10 to-accent/10 rounded-[1.5rem] blur opacity-0 group/textarea:opacity-100 transition duration-500"></div>
                   <textarea
                     required
-                    className="relative w-full h-[32rem] bg-background/50 border border-border rounded-[1.5rem] py-6 px-6 focus:ring-2 focus:ring-primary/20 text-foreground font-mono text-sm placeholder-secondary/30 transition-all outline-none resize-none shadow-inner"
+                    className="input-field relative w-full h-[32rem] py-6 px-6 font-mono text-sm placeholder-secondary/30 resize-none shadow-inner"
+                    style={{ backgroundColor: colors.bg, color: colors.text }}
                     value={formData.code}
                     onChange={e => setFormData({...formData, code: e.target.value})}
                     spellCheck="false"
